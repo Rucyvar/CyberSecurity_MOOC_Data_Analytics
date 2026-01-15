@@ -7,7 +7,12 @@
 .Rproj.user/
 
 # Ignore all data files
-data/
+data/**
+
+# Keep folder structure
+!data/.gitkeep
+!data/enrolments/.gitkeep
+!data/step_activity/.gitkeep
 
 # ProjectTemplate cache
 cache/
