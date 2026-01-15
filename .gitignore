@@ -1,0 +1,17 @@
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+
+# RStudio project files
+.Rproj.user/
+
+# Ignore all data files
+data/*
+
+# ProjectTemplate cache
+cache/
+
+# Temporary files
+*.tmp
+*.log
