@@ -2,7 +2,8 @@
 title: "Cyber Security MOOC Data Analytics"
 author: "Rushi Girdharbhai Vasoya"
 date: "`r Sys.Date()`"
-output: pdf_document
+output:
+  pdf_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -36,3 +37,66 @@ For the diagnosis the environment file as well the step activity file from all t
 
 ## Data Analysis
 
+This section addresses the research question: what are overall patterns of the learner engagement across all course runs? The analysis is bounded by descriptive Comparisons of learner enrollment and step activity across multiple runs of the course in order to find broad engagement trends.
+
+Learner engagement is considered from two complementary viewpoints. First, enrollment data is used to indicate the level of learner participation At a point of registration. Second step activity data is used to represent observable engagement with course content after enrollment. Comparing these measure occurs runs allow the variation in engagement to the be assessed and whether enrollment Translates into active Participation.
+
+Descriptive statistics of total enrollments and total step activity were generated for each course run.The result have allowed the comparisons of engagement pattern across different iterations of course at a high level.
+
+```{r,echo=FALSE}
+kableExtra::kable(
+  engagement_summary,
+  caption = " Summary of enrollments and step activity occurs course runs",
+  align = 'lrr'
+                  )%>%
+  kableExtra::kable_styling(
+    full_width = FALSE,
+    position='center'
+  )
+```
+To further support interpretation, graphical representation Were employed to illustrate contrast in the level of engagement for multiple instance of a course.
+
+```{r ,echo=FALSE, fig.width=8,fig.height=3.75 }
+ggplot2::ggplot(
+  engagement_summary,
+  ggplot2::aes(x=run_id,y=total_step_activity)
+)+
+  ggplot2::geom_col()+
+  ggplot2::labs(
+    title = "Total Step Activity Across Course Runs",
+    x= "Course Run",
+    y='Total Step Activity'
+  )
+```
+
+Analysis of the findings indicates that the level of engagement of learners differ significantly across the runs of the courses. Although some courses have high level of step engagement, other tend to have low levels of engagement, yet the number of enrolled learners in the two scenarios is similar. This implies that the behavior of learners in terms of their engagement with the course differs across the runs of the courses.
+
+Further analysis of the relationship between enrollments and step activity data reveals that greater enrillments are not necessarily correlated to greater engagement levels.
+
+```{r ,echo=FALSE}
+ggplot2::ggplot(
+  engagement_summary,
+  ggplot2::aes(total_enrolments,total_step_activity)
+)+
+  ggplot2::geom_point()+
+  ggplot2::labs(
+    title = " Relationship Between Environment and Step Activity",
+    x = " Total Enrolments",
+    y= "Total Step Activity"
+  )
+```
+
+
+In other runs, There may be many learners who enroll, but there may be fewer engagement with course steps. In this case It clearly show that there are learners who become disengaged after enrolling making it crucial to include behavioral engagement measures in addition to participation counts.
+
+Overall, it can be seen that there is a descriptive analytical summary about engagement that proves engagement intensity is not consistent between runs and does not scale with enrollment.
+
+## Evaluation
+
+Objective of cycle one was to build a founded fundamental understanding of learner engagement by leveraging enrollment data and data from step activities. Investigation cycle 1 was successfully in establishing pattern of learner engagement and the fact that learner participation and engagement differ from each other.
+
+These results satisfy requirements for success that were identified in business understanding phase. Data from multiple course runs has been combined successfully, and engagement  has been summarized as both numerical and graphical it is evident that data on environments is not adequate in describing engagement and the data on step activity is useful in Complementing data environments.
+
+These outcomes highlights some critical Limitations in measure of high level engagement. It can be noted that step activity provides insight into learner engagement volume, Though it fails to provide an understanding of learner activity in terms of different categorical of content. Consequently, these outcome generate further the concern in relation to learner engagement activity.
+
+Therefore, findings from cycle 1 provide a direct motivation for what is explored cycle 2. In the subsequent study, a deeper understanding of learner engagement will be gained by including a far Sophisticated Set of data points related to learner engagement, like video based, interaction based, learning response, and architect data.
