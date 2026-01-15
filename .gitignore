@@ -7,7 +7,7 @@
 .Rproj.user/
 
 # Ignore all data files
-data/*
+data/
 
 # ProjectTemplate cache
 cache/
