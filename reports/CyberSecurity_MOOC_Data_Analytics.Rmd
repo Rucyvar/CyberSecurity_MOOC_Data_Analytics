@@ -100,3 +100,9 @@ These results satisfy requirements for success that were identified in business 
 These outcomes highlights some critical Limitations in measure of high level engagement. It can be noted that step activity provides insight into learner engagement volume, Though it fails to provide an understanding of learner activity in terms of different categorical of content. Consequently, these outcome generate further the concern in relation to learner engagement activity.
 
 Therefore, findings from cycle 1 provide a direct motivation for what is explored cycle 2. In the subsequent study, a deeper understanding of learner engagement will be gained by including a far Sophisticated Set of data points related to learner engagement, like video based, interaction based, learning response, and architect data.
+
+## CRISP-DM Reflection(cycle 1)
+
+This investigation follows the success of CRISP-DM in going from business understanding to data understanding, data preparation, analysis, and final evaluation. Cycle one takes an exhaustive and closed investigation approach to create descriptive baseline measure of learner engagement over various course deliveries. The finding from this cycle will thus from an effective foundation of for cycle 2, where There will be an analysis of specific behavior data to justify learner engagement behaviors.
+
+

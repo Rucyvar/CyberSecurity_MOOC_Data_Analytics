@@ -35,7 +35,7 @@ step_activity_all_cleaned <- step_activity_all %>%
 enrolment_summary <- enrolments_all_cleaned %>%
   dplyr::group_by(run_id) %>%
   dplyr::summarise(
-    total_step_activity = dplyr::n(),
+    total_enrolments  = dplyr::n(),
     .groups = 'drop'
   )
 step_activity_summary <- step_activity_all_cleaned %>%
