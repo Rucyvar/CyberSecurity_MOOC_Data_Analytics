@@ -106,3 +106,155 @@ Therefore, findings from cycle 1 provide a direct motivation for what is explore
 This investigation follows the success of CRISP-DM in going from business understanding to data understanding, data preparation, analysis, and final evaluation. Cycle one takes an exhaustive and closed investigation approach to create descriptive baseline measure of learner engagement over various course deliveries. The finding from this cycle will thus from an effective foundation of for cycle 2, where There will be an analysis of specific behavior data to justify learner engagement behaviors.
 
 
+# CRISP-DM Cycle 2: Behavioural Engagement Analysis Across Course Runs
+
+## Business Understanding
+
+Cycle 1 made clear that learner engagement levels vary quite significantly across course runs, and high enrollment does not necessarily equate to high engagement. These findings were preliminary in nature because they were based on very high-level metrics of participation and didn't explain why these patterns occur.
+
+The focus of Cycle 2 is the explanation of the engagement patterns identified in Cycle 1 through the analysis of learner interaction behaviors and learner archetypes. Rather than introducing new datasets, this cycle focuses on the use of most relevant behavioral and segmentation data in order to provide explanatory insight.
+
+Behavioral engagement is analyzed using video interaction data and question response activity; learner archetypes are used to segment learners into meaningful groups, allowing differences in engagement to be interpreted in terms of the ways in which learners interact with course content and types of learners who are more or less engaged.
+
+The investigation will be successful if clear explanation of variation in engagement observed in Cycle 1 is eminently done through patterns of behavioral engagement and archetype-based differences.
+
+## Data Understanding and Preparation
+
+Cycle 2 depends on three main datasets that were provided by the Newcastle University MOOC platform:
+
+* Video Stats CSV: Records learner interaction with video-based course content
+* Question Response CSV: recording active leaner engagement through assessment interaction
+* Archetype CSV: providing learner classification for behaviour segmentation.
+
+All datasets were cleaned and combined across different course runs. A consistent run_id identifier was maintained to support comparison across course runs.
+
+Question response data were summarized at the learner–run level to measure active participation behavior. Learner archetypes were then attached to these summaries in order to enable segmentation analysis. Video interaction data were combined across runs to represent depth of content engagement.
+
+Data sets included only those that were necessary to explain Cycle 1 engagement patterns so that the analyses would be focused, interpretable, and methodologically sound.
+
+## Data Analysis 
+
+This section addresses the Cycle 2 business question:
+How do learner interaction behaviors and learner archetypes explain the engagement patterns identified in CRISP-DM Cycle 1?
+
+** Behavioural Engagement: Question Response Activity **
+
+Active participation was first explored by means of learner question response behaviour. Learner level summaries capture the number of questions attempted and correct per course run.
+
+```{r ,echo=FALSE}
+kableExtra::kable(
+cycle2_munged %>%
+dplyr::group_by(run_id) %>%
+dplyr::summarise(
+learners = dplyr::n_distinct(learner_id),
+total_questions_attempted = sum(questions_attempted),
+total_questions_correct = sum(as.numeric(questions_correct), na.rm = TRUE),
+.groups = "drop"
+),
+caption = "Summary of Question Response Behaviour Across Course Runs",
+align = "lrrr"
+) %>%
+kableExtra::kable_styling(
+full_width = FALSE,
+position = "center"
+)
+
+```
+
+The above summary indicates that the levels of active participation differ from one course run to another, thus supporting the results from Cycle 1 that the intensity of participation can be different from run to run when the levels of enrollment are relatively similar.
+
+In order to conceptualise this pattern, graphing the question response activity against the course runs was used.
+
+```{r ,echo=FALSE,fig.width=7,fig.height=4}
+ggplot2::ggplot(
+cycle2_munged %>%
+dplyr::group_by(run_id) %>%
+dplyr::summarise(
+total_questions_attempted = sum(questions_attempted),
+.groups = "drop"
+),
+ggplot2::aes(x = run_id, y = total_questions_attempted)
+) +
+ggplot2::geom_col() +
+ggplot2::labs(
+title = "Total Question Response Activity Across Course Runs",
+x = "Course Run",
+y = "Total Questions Attempted"
+)
+
+```
+
+
+** Behavioural Engagement: Video Interaction Activity **
+
+Depth of engagement was further assessed using data related to video interaction. Activity records in videos represent learning engagement beyond enrolled activity.
+
+```{r, echo=FALSE}
+kableExtra::kable(
+  video_context %>%
+    dplyr::group_by(run_id) %>%
+    dplyr::summarise(
+      total_video_activity = dplyr::n(),
+      .groups = "drop"
+    ),
+  caption = "Summary of Video Interaction Activity Across Course Runs",
+  align = "lr"
+) %>%
+  kableExtra::kable_styling(
+    full_width = FALSE,
+    position = "center"
+  )
+
+```
+
+These results show that there are course runs that have relatively high levels of video interaction yet relatively low levels of active participation, and vice versa. It is this contrast that has accounted for the inconsistencies shown for engagement, as mentioned in Cycle 1, and that equally, different types of behavioural engagement do not always show consistency.
+
+** Learner Archetypes and Engagement Behaviour **
+
+In order for the variations in the level of engagement to be understood, the behavior of the learners was segmented based on archetype categories.
+
+```{r ,echo=FALSE}
+kableExtra::kable(
+  cycle2_munged %>%
+    dplyr::group_by(archetype) %>%
+    dplyr::summarise(
+      learners = dplyr::n_distinct(learner_id),
+      total_questions_attempted = sum(questions_attempted),
+      total_questions_correct = sum(questions_correct),
+      .groups = "drop"
+    ),
+  caption = "Question Response Behaviour by Learner Archetype",
+  align = "lrrr"
+) %>%
+  kableExtra::kable_styling(
+    full_width = FALSE,
+    position = "center"
+  )
+
+```
+```{r ,echo=FALSE}
+ggplot2::ggplot(
+  cycle2_munged,
+  ggplot2::aes(x = archetype, y = questions_attempted)
+) +
+  ggplot2::geom_col() +
+  ggplot2::labs(
+    title = "Question Response Activity by Learner Archetype",
+    x = "Learner Archetype",
+    y = "Total Questions Attempted"
+  )
+```
+
+An analysis of the data reveals the extent to which learner archetypes display varied behaviors concerning their level of engagement. Some archetypes play a pivotal role in being actively involved, whereas others remain less involved once they enroll. This explains the rationale behind the high number of enrollments not necessarily being reflected by a high level of engagement, as was witnessed during Cycle 1.
+
+## Evaluation
+
+The aim for Cycle 2 involved the use of learner interaction behaviors and the use of learner archetypes to explain the learning engagement patterns that emerged during Cycle 1. This aim has been achieved.
+
+The results show that variability in engagement levels for multiple runs of a course can be accounted for on the basis of variability in behavior interaction and learner archetype composition. Engagement of learners can be impacted not only based on volume of participation but also based on type and behavior of participants.
+
+## CRISP-DM Reflection (Cycle
+
+Cycle 2 further expands on the lessons from Cycle 1 with the transition from describing participation measures to explaining through behavioral analytics. Once more, the process of following the CRISP-DM methodology helped in conducting a targeted and interpretable analysis.
+
+Through the strategic use of behavioral interaction data and archetypes, it is clear from this cycle that engagement is complex and emerges in relation to behavior and type. The results here pose a compelling solution to the engagement issues presented in Cycle 1 and provide a great basis to move forward with in future analyzes using predictive models or outcome assessments.
