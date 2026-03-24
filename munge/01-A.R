@@ -10,7 +10,7 @@ step_names      <- ls(pattern = "step\\.activity$")
 enrolments_all <- purrr::map_dfr(
   enrolment_names,
   function(df_name) {
-    get(df_name) %>%
+    .get_dataframe(df_name) %>%
       dplyr::mutate(run_id = stringr::str_remove(df_name,'_enrolments$'))
   }
 )
@@ -19,7 +19,7 @@ enrolments_all <- purrr::map_dfr(
 step_activity_all <- purrr::map_dfr(
   step_names,
   function(df_name) {
-    get(df_name) %>%
+    .get_dataframe(df_name) %>%
       dplyr::mutate(run_id = stringr::str_remove(df_name,'_step.activity$'))
   }
 )

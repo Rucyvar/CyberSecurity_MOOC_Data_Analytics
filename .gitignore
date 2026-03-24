@@ -16,3 +16,12 @@ cache/
 # Temporary files
 *.tmp
 *.log
+
+# Rendered report outputs (may contain PII / learner data)
+reports/*.pdf
+reports/*.aux
+reports/*.out
+reports/*.toc
+reports/*.lof
+reports/*.lot
+reports/*.synctex.gz

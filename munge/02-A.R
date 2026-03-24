@@ -7,12 +7,14 @@ video_names <- ls(pattern = '_video.stats$')
 question_names <- ls(pattern = '_question.response$')
 archetype_names<- ls(pattern = '_archetype.survey.responses$')
 
-
 # Combine Question Response
 question_response_all <- purrr::imap_dfr(
   question_names,
   function(name, idx) {
-    get(name) %>%
+    df <- .get_dataframe(name)
+    .require_columns(df, c("learner_id", "correct"),
+                     context = paste("question.response dataset:", name))
+    df %>%
       dplyr::mutate(
         run_id = stringr::str_extract(name, "\\d+")
       )
@@ -23,7 +25,10 @@ question_response_all <- purrr::imap_dfr(
 archetype_all <- purrr::imap_dfr(
   archetype_names,
   function(name, idx) {
-    get(name) %>%
+    df <- .get_dataframe(name)
+    .require_columns(df, c("learner_id"),
+                     context = paste("archetype dataset:", name))
+    df %>%
       dplyr::mutate(
         dplyr::across(everything(), as.character),
         run_id = stringr::str_extract(name, "\\d+")
@@ -64,7 +69,7 @@ cache("cycle2_munged")
 video_context <- purrr::imap_dfr(
   video_names,
   function(name, idx) {
-    get(name) %>%
+    .get_dataframe(name) %>%
       dplyr::mutate(
         run_id = stringr::str_extract(name, "\\d+")
       )
@@ -72,4 +77,3 @@ video_context <- purrr::imap_dfr(
 )
 
 cache("video_context")
-
